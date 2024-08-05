@@ -45,14 +45,13 @@ fn main() {
     let cfg = cfg.define("USE_OPENMP", "OFF");
     #[cfg(feature = "gpu")]
     let cfg = cfg.define("USE_GPU", "1");
-    #[cfg(feature = "cude")]
+    #[cfg(feature = "cuda")]
     let cfg = cfg.define("USE_CUDA", "1");
     let dst = cfg.build();
-
     // bindgen build
     let bindings = bindgen::Builder::default()
         .header("wrapper.h")
-        .clang_args(&["-x", "c++", "-std=c++11"])
+        .clang_args(&["-x", "c++", "-std=c++14"])
         .clang_arg(format!("-I{}", lgbm_root.join("include").display()))
         .generate()
         .expect("Unable to generate bindings");
